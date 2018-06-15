@@ -7,6 +7,7 @@ from sklearn.datasets.samples_generator import make_blobs
 import csv
 import os
 import shutil
+import sys
 
 def compupte_cluster(X, eps, min_samples):
     db = DBSCAN(eps=eps, min_samples=min_samples, n_jobs=-1).fit(X)
@@ -49,15 +50,15 @@ def compupte_cluster(X, eps, min_samples):
 
     plt.savefig(out_name)
 
-    plt.show()
+    # plt.show()
 
     return labels
 
 def save_result(labels, eps, min_samples):
     # output dir
-    out_file = ".\\img_path_labels.csv"
+    out_file = ".\\data\\img_path_tsne_labels.csv"
 
-    df2 = pandas.read_csv('.\\img_path.csv', sep=',')
+    df2 = pandas.read_csv('.\\data\\img_path.csv', sep=',')
 
     f = open(out_file, 'w')
     w = csv.DictWriter(
@@ -69,7 +70,7 @@ def save_result(labels, eps, min_samples):
         w.writerow({'id': i, 'file_path': df2['img_path'][i], 'label': labels[i]})
 
     # Write to files
-    df = pandas.read_csv('.\\img_path_labels.csv', sep='\t')
+    df = pandas.read_csv('.\\data\\img_path_tsne_labels.csv', sep='\t')
 
     out_root = ".\\cluster\\eps" + str(eps) + "_min" + str(min_samples)
 
@@ -84,13 +85,16 @@ def save_result(labels, eps, min_samples):
             os.mkdir(out_dir)
 
         if (row['label'] != -1):
-            shutil.copy(row['file_path'], out_dir)
+            try:
+                shutil.copy(row['file_path'], out_dir)
+            except:
+                print (sys.exc_info())
 
         if (idx % 500 == 0):
             print("Finish %.2f%%. Index: %d" % (1.0 * idx / total_count * 100, idx))
 
 if __name__ == '__main__':
-    input_file = ".\\img_path_features_tsne.tsv"
+    input_file = ".\\data\\img_path_features_tsne.tsv"
 
     df = pandas.read_csv(input_file, sep="\t")
     x = []
@@ -106,20 +110,12 @@ if __name__ == '__main__':
     for i in range(len(x)):
         X.append([x[i], y[i]])
     X = np.array(X)
-    print (X)
-
-    # centers= [[1, 1], [-1, -1], [1, -1]]
-    # X, labels_true = make_blobs(n_samples=750, centers=centers, cluster_std=0.4, random_state=0)
-
-    # X = StandardScaler().fit_transform(X)
-
-    # print (type(X))
-
+    # print (X)
 
     # Compute DBSCAN
-    eps = 3
-    min_samples = 10
-    
+    eps = 6
+    min_samples = 35
+
     # Compute cluster
     labels = compupte_cluster(X, eps, min_samples)
 

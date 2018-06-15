@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-#
-# Copyright 2017 Zegami Ltd
-
 """Preprocess images using Keras pre-trained models."""
 
 import argparse
@@ -52,8 +48,8 @@ def named_model(name='ResNet50'):
 # source_dir = os.path.dirname(pargs.source)
 
 select_model = named_model('ResNet50')
-csv_file = ".\\img_path.csv"
-source_dir = ".\\"
+csv_file = ".\\data\\img_path.csv"
+source_dir = ".\\data"
 total_count = 0
 finish_count = 0
 
@@ -120,7 +116,7 @@ def start():
         # write to a tab delimited file
         source_filename = os.path.splitext(csv_file)[0].split(os.sep)[-1]
 
-        with open(os.path.join(source_dir, '{}_features.tsv'.format(source_filename)), 'w') as output:
+        with open(os.path.join(source_dir, '{}_features_half.tsv'.format(source_filename)), 'w') as output:
             w = csv.DictWriter(output, fieldnames=['id', 'features'], delimiter='\t', lineterminator='\n')
             w.writeheader()
             w.writerows(features)
