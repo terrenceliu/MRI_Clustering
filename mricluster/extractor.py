@@ -75,10 +75,10 @@ def __get_model(model: str):
     return applications.resnet50.ResNet50(weights='imagenet', include_top=False, pooling='avg')
 
 
-def extractor(model: str="ResNet50") -> ModelWorker:
+def extract_worker_factory(model: str="ResNet50", verbose=False) -> ModelWorker:
     """
     :param model: the name of pre-trained model to use
     :return:
     """
     model = __get_model(model)
-    return ModelWorker(model)
+    return ModelWorker(model, verbose)

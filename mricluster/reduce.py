@@ -42,7 +42,7 @@ def __get_model(model: str, n_component: int):
     raise ValueError('Unknown model name')
 
 
-def reduce(model: str="TSNE", n_component=2):
+def reduce_worker_factory(model: str="TSNE", n_component=2):
     """
 
     :param model: Name of the dimension reduce model. Default 'tSNE'

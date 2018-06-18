@@ -14,7 +14,7 @@ class DBSCANWorker(object):
     Cluster worker
     """
 
-    def __init__(self, eps, min_samples, model):
+    def __init__(self, eps, min_samples):
         self.db = DBSCAN(eps=eps, min_samples=min_samples, n_jobs=-1)
 
     def fit(self, X) -> DBSCAN:
@@ -27,6 +27,10 @@ class DBSCANWorker(object):
 
     def labels(self):
         return self.db.labels_
+
+
+def cluster_worker_factory(eps, min_samples):
+    return DBSCAN(eps, min_samples)
 
 
 
