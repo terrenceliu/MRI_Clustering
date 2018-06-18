@@ -1,6 +1,5 @@
 """Perform t-SNE on a preprocessed dataset."""
 
-import argparse
 import csv
 import os
 import sys
@@ -12,6 +11,7 @@ from sklearn import (
     manifold,
     pipeline,
 )
+
 
 def named_model(name):
     if name == 'TSNE':
@@ -69,7 +69,7 @@ def main(argv):
     #     '--model', default='TSNE', type=named_model, help='use named model')
     # args = parser.parse_args(argv[1:])
 
-    source = ".\\img_path_features.csv"
+    source = ".\\data\\img_path_features_full.tsv"
     limit = None
     model = named_model("TSNE")
 

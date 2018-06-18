@@ -1,15 +1,13 @@
 """Preprocess images using Keras pre-trained models."""
 
-import argparse
 import csv
 import os
 
-from keras import applications
-from keras.applications.resnet50 import preprocess_input, decode_predictions
-from keras.preprocessing import image
 import numpy as np
 import pandas
-
+from keras import applications
+from keras.applications.resnet50 import preprocess_input
+from keras.preprocessing import image
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -75,8 +73,10 @@ def get_feature(metadata):
 
                 # print('Predicted:', decode_predictions(features, top=3)[0])
 
-                # print (features)
+
                 features = features[0]
+                print()
+                print(len(features))
 
                 # convert from Numpy to a list of values
                 features_arr = np.char.mod('%f', features)
